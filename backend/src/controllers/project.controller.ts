@@ -22,13 +22,13 @@ export const createProject = async(req: Request, res: Response) => {
         });
     }
 
-    const project = projectService.createProject(result.data);
+    const project = await projectService.createProject(result.data);
 
     return res.status(201).json({ data: project});
 };
 
 export const getProjects = async(req: Request, res: Response) => {
-    const projects = projectService.getProjects();
+    const projects = await projectService.getProjects();
 
     return res.status(200).json({ data: projects });
 };
