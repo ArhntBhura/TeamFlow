@@ -15,6 +15,13 @@
       "when": 1791570968694,
       "tag": "0001_peaceful_grey_gargoyle",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791579442460,
+      "tag": "0002_lowly_christian_walker",
+      "breakpoints": true
     }
   ]
 }

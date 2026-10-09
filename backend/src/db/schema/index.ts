@@ -11,6 +11,10 @@ export const users = pgTable("users", {
         length: 255,
     }).notNull().unique(),
 
+    passwordHash: varchar("password_hash", {
+        length: 255,
+    }),
+
     createdAt: timestamp("created_at").defaultNow().notNull()
 });
 

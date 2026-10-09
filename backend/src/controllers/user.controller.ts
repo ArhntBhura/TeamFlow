@@ -2,21 +2,6 @@ import type { Request, Response } from "express";
 import { createUserSchema, updateUserSchema } from "../validators/user.validator.ts";
 import * as userService from "../services/user.service.ts";
 
-export const createUser = async (req: Request, res: Response) => {
-    const result = createUserSchema.safeParse(req.body);
-
-    if(!result.success) {
-        return res.status(400).json({
-            error: "Validation failed",
-            details: result.error.flatten()
-        });
-    }
-
-    const user = await userService.createUser(result.data);
-
-    return res.status(201).json(user);
-};
-
 export const getUsers = async (req: Request, res: Response) => {
     const users = await userService.getUsers();
 
