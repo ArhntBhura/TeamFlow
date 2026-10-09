@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import AppLayout from "../components/AppLayout";
 import { getProjects } from "../api/projects.api";
 import type { Project } from "../types/project";
 
-export default function ProjectPage() {
+export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -42,13 +43,29 @@ export default function ProjectPage() {
   }
 
   return (
-    <main>
-      <h1>TeamFlow Projects</h1>
-      <p>Manage and track your team's projects.</p>
-      <Link to="/projects/new">+ Create Project</Link>
+    <AppLayout>
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            Projects
+          </h1>
+          <p className="mt-1 text-sm text-slate-500">
+            Manage and track your team's projects.
+          </p>
+        </div>
+
+        <a
+          href="/projects/new"
+          className="inline-flex items-center rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"
+        >
+          + New project
+        </a>
+      </div>
 
       {projects.length === 0 ? (
-        <p>No projects yet. Create your first project soon.</p>
+        <p className="mt-1 text-sm text-slate-500">
+          No projects yet. Create your first project soon.
+        </p>
       ) : (
         <section>
           {projects.map((project) => (
@@ -60,6 +77,6 @@ export default function ProjectPage() {
           ))}
         </section>
       )}
-    </main>
+    </AppLayout>
   );
 }
