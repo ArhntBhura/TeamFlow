@@ -12,31 +12,15 @@ export const createUser = async (req: Request, res: Response) => {
         });
     }
 
-    try {
-        const user = await userService.createUser(result.data);
+    const user = await userService.createUser(result.data);
 
-        return res.status(201).json(user);
-    } catch(error) {
-        console.error(error);
-
-        return res.status(500).json({
-            error: "Internal server error"
-        });
-    }
+    return res.status(201).json(user);
 };
 
 export const getUsers = async (req: Request, res: Response) => {
-    try {
-        const users = await userService.getUsers();
+    const users = await userService.getUsers();
 
-        return res.status(200).json(users);
-    } catch(error) {
-        console.error(error);
-
-        return res.status(500).json({
-            error: "Internal server error"
-        });
-    }
+    return res.status(200).json(users);
 };
 
 export const getUserById = async (req: Request, res: Response) => {
@@ -47,24 +31,15 @@ export const getUserById = async (req: Request, res: Response) => {
             error: "Invalid user id"
         });
     }
+    const user = userService.getUserById(id);
 
-    try {
-        const user = userService.getUserById(id);
-
-        if (!user) {
-            return res.status(404).json({
-                error: "User not found"
-            });
-        }
-
-        return res.status(200).json(user);
-    } catch(error) {
-        console.error(error);
-
-        return res.status(500).json({
-            error: "Internal server error"
+    if (!user) {
+        return res.status(404).json({
+            error: "User not found"
         });
     }
+
+    return res.status(200).json(user);
 };
 
 export const deleteUserById = async (req: Request, res: Response) => {
@@ -75,24 +50,15 @@ export const deleteUserById = async (req: Request, res: Response) => {
             error: "Invalid id"
         });
     }
+    const deletedUser = userService.deleteUserById(id);
 
-    try {
-        const deletedUser = userService.deleteUserById(id);
-
-        if(!deletedUser) {
-            return res.status(404).json({
-                error: "User not found"
-            });
-        }
-
-        return res.status(204).send();
-    } catch(error) {
-        console.error(error);
-
-        return res.status(500).json({
-            error: "Internal server error"
+    if(!deletedUser) {
+        return res.status(404).json({
+            error: "User not found"
         });
     }
+
+    return res.status(204).send();
 };
 
 export const updateUserById = async (req: Request, res: Response) => {
@@ -103,31 +69,22 @@ export const updateUserById = async (req: Request, res: Response) => {
             error: "Invalid Userid"
         });
     }
-
-    try {
-        const result = updateUserSchema.safeParse(req.body);
-        
-        if(!result.success) {
-            return res.status(400).json({
-                error: "Validation failed",
-                details: result.error.flatten()
-            });
-        }
-
-        const updatedUser = userService.updateUserById(id, result.data);
-
-        if(!updatedUser) {
-            return res.status(404).json({
-                error: "User not found"
-            });
-        }
-
-        return res.status(200).json(updatedUser);
-    } catch(error) {
-        console.error(error);
-
-        return res.status(500).json({
-            error: "Internal server error"
+    const result = updateUserSchema.safeParse(req.body);
+    
+    if(!result.success) {
+        return res.status(400).json({
+            error: "Validation failed",
+            details: result.error.flatten()
         });
     }
+
+    const updatedUser = userService.updateUserById(id, result.data);
+
+    if(!updatedUser) {
+        return res.status(404).json({
+            error: "User not found"
+        });
+    }
+
+    return res.status(200).json(updatedUser);
 };
