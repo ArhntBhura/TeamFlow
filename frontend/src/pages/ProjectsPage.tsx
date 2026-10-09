@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import { getProjects } from "../api/projects.api";
 import type { Project } from "../types/project";
 
@@ -43,6 +45,7 @@ export default function ProjectPage() {
     <main>
       <h1>TeamFlow Projects</h1>
       <p>Manage and track your team's projects.</p>
+      <Link to="/projects/new">+ Create Project</Link>
 
       {projects.length === 0 ? (
         <p>No projects yet. Create your first project soon.</p>
